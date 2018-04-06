@@ -1,7 +1,6 @@
 package org.oldbox.clippy.draganddrop;
 
 import io.reactivex.Flowable;
-import io.reactivex.Scheduler;
 import io.reactivex.schedulers.Schedulers;
 import org.oldbox.clippy.Category;
 import org.oldbox.clippy.ClippyContext;
