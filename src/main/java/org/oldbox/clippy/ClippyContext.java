@@ -1,6 +1,5 @@
 package org.oldbox.clippy;
 
-import lombok.Getter;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,7 +19,7 @@ public class ClippyContext {
 
     public static final int DATABASE_UPDATED = 1337;
 
-    @Getter
+
     private ClippyRepository repository;
 
     private ArrayList<ActionListener> listeners;
@@ -41,4 +40,7 @@ public class ClippyContext {
     }
 
 
+    public ClippyRepository getRepository() {
+        return repository;
+    }
 }
