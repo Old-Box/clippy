@@ -3,6 +3,7 @@ package org.oldbox.clippy;
 import java.security.InvalidParameterException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class ClippyRepository {
 
@@ -29,5 +30,9 @@ public class ClippyRepository {
 
     public void addEntryToCategory(String categoryName, NoteEntry entry) {
         this.getCategory(categoryName).getEntries().add(entry);
+    }
+
+    public Set<String> getCategories() {
+        return this.database.keySet();
     }
 }
