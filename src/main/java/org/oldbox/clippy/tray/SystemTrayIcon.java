@@ -11,8 +11,10 @@ import java.util.Set;
 
 public class SystemTrayIcon extends TrayIcon {
 
-    private static PopupMenu createPopupMenu(Set<String> categories) {
-        PopupMenu menu = new PopupMenu();
+    private PopupMenu menu;
+
+    private void populateMenu(Set<String> categories) {
+        menu.removeAll();
 
         if (categories != null) {
             for (String name: categories) {
@@ -20,26 +22,26 @@ public class SystemTrayIcon extends TrayIcon {
             }
             menu.addSeparator();
         }
-
         menu.add(new AddCategoryItem());
         menu.add(new DatabaseContentItem());
         menu.add(new ExitItem());
-
-        return menu;
     }
-
 
     public SystemTrayIcon(Image img) {
         super(img);
+        this.setToolTip("Clippy");
+        menu = new PopupMenu();
 
         ClippyContext ctx = ClippyContext.getInstance();
+        Set<String> categories = ctx.getRepository().getCategories();
+        populateMenu(categories);
 
         ctx.addListener(e -> {
-            Set<String> categories = ctx.getRepository().getCategories();
+            Set<String> updatedCategories = ctx.getRepository().getCategories();
 
-            this.setPopupMenu(createPopupMenu(categories));
+            this.populateMenu(updatedCategories);
         });
 
-        this.setPopupMenu(createPopupMenu(null));
+        this.setPopupMenu(menu);
     }
 }
