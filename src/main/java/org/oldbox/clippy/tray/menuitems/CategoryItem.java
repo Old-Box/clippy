@@ -2,7 +2,7 @@ package org.oldbox.clippy.tray.menuitems;
 
 import org.oldbox.clippy.Category;
 import org.oldbox.clippy.ClippyContext;
-import org.oldbox.clippy.draganddrop.DragAndDropFrame;
+import org.oldbox.clippy.frames.DragAndDropFrame;
 
 import java.awt.*;
 
