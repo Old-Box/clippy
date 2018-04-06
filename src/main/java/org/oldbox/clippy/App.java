@@ -34,6 +34,7 @@ public class App {
             return (new ImageIcon(imageURL, description)).getImage();
         }
     }
+
     private void run() throws AWTException {
         this.startSystemTray();
     }
