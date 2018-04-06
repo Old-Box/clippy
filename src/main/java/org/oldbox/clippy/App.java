@@ -40,12 +40,7 @@ public class App {
     }
 
 
-    public static void main(String[] args) {
-        try {
-            new App().run();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            System.exit(1);
-        }
+    public static void main(String[] args) throws AWTException {
+        new App().run();
     }
 }
