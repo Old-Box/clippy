@@ -4,19 +4,18 @@ import lombok.Getter;
 
 public class ClippyContext {
 
-    @Getter
-    private ClippyRepository repository;
-
     private static ClippyContext ctx = null;
 
     public static ClippyContext getInstance() {
-       if(ctx == null) {
-           ctx = new ClippyContext();
-       }
+        if(ctx == null) {
+            ctx = new ClippyContext();
+        }
 
-       return ctx;
+        return ctx;
     }
 
+    @Getter
+    private ClippyRepository repository;
 
     public ClippyContext() {
         this.repository = new ClippyRepository();
