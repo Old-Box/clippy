@@ -3,20 +3,48 @@ plugins {
     id 'java'
 }
 
-group 'org.oldbox'
-version '1.0-SNAPSHOT'
-
 apply plugin: 'java'
+apply plugin: 'eclipse'
+//apply plugin: 'application'
 
+group 'org.oldbox'
+version '0.1-ALPHA'
+//mainClassName = 'org.oldbox.clippy.App'
 sourceCompatibility = 1.8
+
 
 lombok {
 	version = "1.16.20"
 	sha256 = ""
 }
 
+jar {
+    manifest {
+        attributes(
+                'Implementation-Title': project.name,
+                'Implementation-Version': version,
+                'Main-Class': 'org.oldbox.clippy.App',
+                //'Class-Path': configurations.runtimeClasspath.file.collect { it.getName() }.join(' ')
+        )
+    }
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it)}
+    }
+}
+
+task customFatJar(type: Jar) {
+    manifest {
+        attributes 'Main-Class': 'org.oldbox.clippy.App'
+    }
+    baseName = 'Clippy'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it)} }
+    with jar
+}
+
+
 repositories {
     mavenCentral()
+    jcenter()
 }
 
 dependencies {
