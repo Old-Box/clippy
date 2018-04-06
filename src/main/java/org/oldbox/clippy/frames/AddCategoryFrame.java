@@ -18,7 +18,8 @@ public class AddCategoryFrame extends JFrame{
         this.setSize(200, 120);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        this.add(this.panel);
+        this.setContentPane(panel);
+        //this.add(this.panel);
 
         this.addButton.addActionListener(e -> {
 
