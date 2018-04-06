@@ -27,7 +27,7 @@ public class AddCategoryFrame extends JFrame{
             ClippyContext ctx = ClippyContext.getInstance();
 
             try {
-                ctx.addCategory(categoryName);
+                ctx.getRepository().addCategory(categoryName, "#000000");
                 this.setVisible(false);
                 this.dispose();
             } catch (InvalidParameterException exception) {

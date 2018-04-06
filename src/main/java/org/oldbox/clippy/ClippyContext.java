@@ -1,13 +1,11 @@
 package org.oldbox.clippy;
 
-import java.security.InvalidParameterException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import lombok.Getter;
 
 public class ClippyContext {
 
-    private Map<String, ArrayList<NoteEntry>> database;
+    @Getter
+    private ClippyRepository repository;
 
     private static ClippyContext ctx = null;
 
@@ -21,26 +19,8 @@ public class ClippyContext {
 
 
     public ClippyContext() {
-        this.database = new HashMap<>();
+        this.repository = new ClippyRepository();
     }
 
-    public boolean categoryExists(String name) {
-        return this.database.containsKey(name);
-    }
-
-    public void addCategory(String name) {
-        if (this.categoryExists(name)) {
-            throw new InvalidParameterException();
-        }
-        this.database.put(name, new ArrayList<>());
-    }
-
-    public ArrayList<NoteEntry> getCategory(String name) {
-        return this.database.get(name);
-    }
-
-    public void addEntryToCategory(String categoryName, NoteEntry entry) {
-        this.getCategory(categoryName).add(entry);
-    }
 
 }
