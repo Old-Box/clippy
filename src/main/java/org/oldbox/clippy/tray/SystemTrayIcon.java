@@ -16,7 +16,7 @@ public class SystemTrayIcon extends TrayIcon {
     private void populateMenu(Set<String> categories) {
         menu.removeAll();
 
-        if (categories != null) {
+        if (categories != null && categories.size() > 0) {
             for (String name: categories) {
                 menu.add(new CategoryItem(name));
             }
