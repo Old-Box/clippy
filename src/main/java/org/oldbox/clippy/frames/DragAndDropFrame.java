@@ -51,6 +51,7 @@ public class DragAndDropFrame extends JFrame {
         NoteEntry entry = new NoteEntry(content);
         ClippyRepository repository = ClippyContext.getInstance().getRepository();
         repository.addEntryToCategory(category, entry);
+        droppableTextArea.setText(""); // If this is not desired automatically, then a check box could be added for automatic clean up.
         showSavedMessage();
     }
 
