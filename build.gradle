@@ -5,11 +5,10 @@ plugins {
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
-//apply plugin: 'application'
+apply plugin: 'application'
 
 group 'org.oldbox'
 version '0.1-ALPHA'
-//mainClassName = 'org.oldbox.clippy.App'
 sourceCompatibility = 1.8
 
 
@@ -24,7 +23,6 @@ jar {
                 'Implementation-Title': project.name,
                 'Implementation-Version': version,
                 'Main-Class': 'org.oldbox.clippy.App',
-                //'Class-Path': configurations.runtimeClasspath.file.collect { it.getName() }.join(' ')
         )
     }
     from {
@@ -40,7 +38,6 @@ task customFatJar(type: Jar) {
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it)} }
     with jar
 }
-
 
 repositories {
     mavenCentral()
