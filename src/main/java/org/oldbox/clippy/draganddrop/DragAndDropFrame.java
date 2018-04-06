@@ -1,5 +1,8 @@
 package org.oldbox.clippy.draganddrop;
 
+import io.reactivex.Flowable;
+import io.reactivex.Scheduler;
+import io.reactivex.schedulers.Schedulers;
 import org.oldbox.clippy.Category;
 import org.oldbox.clippy.ClippyContext;
 import org.oldbox.clippy.ClippyRepository;
@@ -13,6 +16,7 @@ public class DragAndDropFrame extends JFrame {
     private JPanel panel;
     private JButton saveButton;
     private JLabel categoryLabel;
+    private JLabel messageLabel;
 
     public DragAndDropFrame(Category category) {
         super();
@@ -46,5 +50,25 @@ public class DragAndDropFrame extends JFrame {
         NoteEntry entry = new NoteEntry(content);
         ClippyRepository repository = ClippyContext.getInstance().getRepository();
         repository.addEntryToCategory(category, entry);
+        showSavedMessage();
+    }
+
+    private void showSavedMessage() {
+        Flowable.fromCallable(() -> {
+            messageLabel.setText("Entry saved");
+            messageLabel.setForeground(Color.GREEN);
+            messageLabel.updateUI();
+            Thread.sleep(1000);
+            return "Done";
+        })
+        .subscribeOn(Schedulers.io())
+        .observeOn(Schedulers.single())
+        .subscribe(
+                (s) -> {
+                    messageLabel.setText("");
+                    messageLabel.updateUI();
+                },
+                Throwable::printStackTrace
+        );
     }
 }
