@@ -1,6 +1,9 @@
 package org.oldbox.clippy.tray.menuitems;
 
-import javax.swing.*;
+import org.oldbox.clippy.Category;
+import org.oldbox.clippy.ClippyContext;
+import org.oldbox.clippy.draganddrop.DragAndDropFrame;
+
 import java.awt.*;
 
 public class CategoryItem extends MenuItem {
@@ -12,7 +15,9 @@ public class CategoryItem extends MenuItem {
         this.categoryName = name;
 
         this.addActionListener(e -> {
-            JOptionPane.showMessageDialog(null, "Category: " + this.categoryName + " should open");
+            ClippyContext ctx = ClippyContext.getInstance();
+            Category category = ctx.getRepository().getCategory(this.categoryName);
+            new DragAndDropFrame(category);
         });
     }
 
