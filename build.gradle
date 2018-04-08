@@ -1,5 +1,4 @@
 plugins {
-    id 'io.franzbecker.gradle-lombok' version '1.11'
     id 'java'
     id "edu.sc.seis.macAppBundle" version "2.1.0"
 }
@@ -13,11 +12,6 @@ group 'org.oldbox'
 version '0.1-ALPHA'
 sourceCompatibility = 1.8
 mainClassName = 'org.oldbox.clippy.App'
-
-lombok {
-	version = "1.16.20"
-	sha256 = ""
-}
 
 jar {
     manifest {
