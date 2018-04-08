@@ -8,8 +8,6 @@ import org.oldbox.clippy.ClippyRepository;
 import org.oldbox.clippy.NoteEntry;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.*;
 
 public class DragAndDropFrame extends JFrame {
