@@ -27,7 +27,6 @@ public class AddCategoryFrame extends JFrame {
 
             try {
                 ctx.getRepository().addCategory(categoryName, "#000000");
-                ctx.triggerListeners();
                 this.setVisible(false);
                 this.dispose();
             } catch (InvalidParameterException exception) {

@@ -1,6 +1,7 @@
 package org.oldbox.clippy.tray;
 
 import org.oldbox.clippy.ClippyContext;
+import org.oldbox.clippy.ClippyRepository;
 import org.oldbox.clippy.tray.menuitems.AddCategoryItem;
 import org.oldbox.clippy.tray.menuitems.CategoryItem;
 import org.oldbox.clippy.tray.menuitems.DatabaseContentItem;
@@ -36,10 +37,11 @@ public class SystemTrayIcon extends TrayIcon {
         Set<String> categories = ctx.getRepository().getCategories();
         populateMenu(categories);
 
-        ctx.addListener(e -> {
-            Set<String> updatedCategories = ctx.getRepository().getCategories();
-
-            this.populateMenu(updatedCategories);
+        ctx.getRepository().addActionListener(e -> {
+            if (e.getID() == ClippyRepository.DATABASE_UPDATED) {
+                Set<String> updatedCategories = ctx.getRepository().getCategories();
+                this.populateMenu(updatedCategories);
+            }
         });
 
         this.setPopupMenu(menu);
