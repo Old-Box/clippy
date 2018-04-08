@@ -24,9 +24,9 @@ public class ClippyRepository {
 
     private StorageBackend storageBackend;
 
-    public ClippyRepository() throws FileSystemException {
+    public ClippyRepository(StorageBackend storageBackend) {
         this.actionListeners = new ArrayList<>();
-        this.storageBackend = new GsonFileBackend();
+        this.storageBackend = storageBackend;
     }
 
     private Map<String, Category> getDatabase() throws FileSystemException {

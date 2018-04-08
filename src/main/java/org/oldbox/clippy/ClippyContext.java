@@ -1,5 +1,8 @@
 package org.oldbox.clippy;
 
+import org.oldbox.clippy.storage.GsonFileBackend;
+import org.oldbox.clippy.storage.StorageBackend;
+
 import javax.swing.*;
 import java.nio.file.FileSystemException;
 
@@ -11,7 +14,8 @@ public class ClippyContext {
     public static ClippyContext getInstance() {
         if(ctx == null) {
             try {
-                ctx = new ClippyContext();
+                StorageBackend storageBackend = new GsonFileBackend();
+                ctx = new ClippyContext(storageBackend);
             } catch (FileSystemException e) {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(null, "Unable to create or open the save file");
@@ -24,8 +28,8 @@ public class ClippyContext {
 
     private ClippyRepository repository;
 
-    public ClippyContext() throws FileSystemException {
-        this.repository = new ClippyRepository();
+    public ClippyContext(StorageBackend storageBackend) {
+        this.repository = new ClippyRepository(storageBackend);
     }
 
     public ClippyRepository getRepository() {
