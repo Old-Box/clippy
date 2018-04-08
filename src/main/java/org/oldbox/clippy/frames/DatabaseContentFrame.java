@@ -18,13 +18,13 @@ public class DatabaseContentFrame extends JFrame {
         StringBuilder data = new StringBuilder();
 
         for (String categoryName : ctx.getRepository().getCategories()) {
-            data.append(categoryName).append("\n");
+            data.append(categoryName).append("\n").append("\n");
 
             for (NoteEntry entry : ctx.getRepository().getCategory(categoryName).getEntries()) {
-                data.append(entry.getTimestamp()).append(" ").append(entry.getData()).append("\n");
+                data.append(entry.getTimestamp()).append("\n").append(entry.getData()).append("\n\n");
             }
 
-            data.append("\n");
+            data.append("--------------").append("\n");
         }
 
         return data.toString();
