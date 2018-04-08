@@ -4,7 +4,6 @@ package org.oldbox.clippy;
 import java.awt.*;
 =======
 import org.oldbox.clippy.storage.StorageBackend;
-import org.oldbox.clippy.storage.GsonFileBackend;
 
 >>>>>>> Moved from in-memory storage to StorageBackend
 import java.awt.event.ActionEvent;
@@ -36,7 +35,7 @@ public class ClippyRepository {
         try {
             database = storageBackend.loadDatabase();
         } catch (FileNotFoundException e) {
-            database = new HashMap<String, Category>();
+            database = new HashMap<>();
         }
 
         return database;
