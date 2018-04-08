@@ -1,7 +1,5 @@
 package org.oldbox.clippy.frames;
 
-import com.intellij.uiDesigner.core.GridConstraints;
-import com.intellij.uiDesigner.core.GridLayoutManager;
 import io.reactivex.Flowable;
 import io.reactivex.schedulers.Schedulers;
 import org.oldbox.clippy.Category;
