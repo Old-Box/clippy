@@ -1,7 +1,5 @@
 package org.oldbox.clippy.frames;
 
-import io.reactivex.Flowable;
-import io.reactivex.schedulers.Schedulers;
 import org.oldbox.clippy.Category;
 import org.oldbox.clippy.ClippyContext;
 import org.oldbox.clippy.ClippyRepository;
@@ -55,22 +53,20 @@ public class DragAndDropFrame extends JFrame {
     }
 
     private void showSavedMessage() {
-        Flowable.fromCallable(() -> {
-            messageLabel.setText("Entry saved");
-            messageLabel.setForeground(Color.GREEN);
-            messageLabel.updateUI();
-            Thread.sleep(1000);
-            return "Done";
-        })
-                .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.single())
-                .subscribe(
-                        (s) -> {
-                            messageLabel.setText("");
-                            messageLabel.updateUI();
-                        },
-                        Throwable::printStackTrace
-                );
+        messageLabel.setText("Entry saved");
+        messageLabel.setForeground(Color.GREEN);
+        messageLabel.updateUI();
+
+        new Thread(() -> {
+            try {
+                Thread.sleep(1000);
+                messageLabel.setText("");
+                messageLabel.updateUI();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
+
     }
 
     {
