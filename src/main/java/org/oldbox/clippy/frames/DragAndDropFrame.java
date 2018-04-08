@@ -56,7 +56,7 @@ public class DragAndDropFrame extends JFrame {
         messageLabel.setForeground(Color.GREEN);
         messageLabel.updateUI();
 
-        Runnable task = () -> {
+        new Thread(() -> {
             try {
                 Thread.sleep(1000);
                 messageLabel.setText("");
@@ -64,9 +64,8 @@ public class DragAndDropFrame extends JFrame {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        };
+        }).start();
 
-        new Thread(task).start();
     }
 
     {
