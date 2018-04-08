@@ -1,10 +1,13 @@
 package org.oldbox.clippy.frames;
 
+import com.intellij.uiDesigner.core.GridConstraints;
+import com.intellij.uiDesigner.core.GridLayoutManager;
 import org.oldbox.clippy.ClippyContext;
 import org.oldbox.clippy.NoteEntry;
 
 import javax.swing.*;
 import java.awt.*;
+import java.nio.file.FileSystemException;
 
 public class DatabaseContentFrame extends JFrame {
     private JTextArea textArea1;
@@ -17,14 +20,19 @@ public class DatabaseContentFrame extends JFrame {
 
         StringBuilder data = new StringBuilder();
 
-        for (String categoryName : ctx.getRepository().getCategories()) {
-            data.append(categoryName).append("\n").append("\n");
+        try {
+            for (String categoryName : ctx.getRepository().getCategories()) {
+                data.append(categoryName).append("\n").append("\n");
 
-            for (NoteEntry entry : ctx.getRepository().getCategory(categoryName).getEntries()) {
-                data.append(entry.getTimestamp()).append("\n").append(entry.getData()).append("\n\n");
+                for (NoteEntry entry : ctx.getRepository().getCategory(categoryName).getEntries()) {
+                    data.append(entry.getTimestamp()).append("\n").append(entry.getData()).append("\n\n");
+                }
+
+                data.append("--------------").append("\n");
             }
-
-            data.append("--------------").append("\n");
+        } catch (FileSystemException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Unable to read from save file");
         }
 
         return data.toString();
@@ -58,10 +66,10 @@ public class DatabaseContentFrame extends JFrame {
      */
     private void $$$setupUI$$$() {
         panel1 = new JPanel();
-        panel1.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         textArea1 = new JTextArea();
         textArea1.setEditable(false);
-        panel1.add(textArea1, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
+        panel1.add(textArea1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
     }
 
     /**
