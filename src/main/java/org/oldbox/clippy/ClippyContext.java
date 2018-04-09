@@ -28,7 +28,7 @@ public class ClippyContext {
 
     private ClippyRepository repository;
 
-    public ClippyContext(StorageBackend storageBackend) {
+    protected ClippyContext(StorageBackend storageBackend) {
         this.repository = new ClippyRepository(storageBackend);
     }
 
