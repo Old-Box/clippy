@@ -51,6 +51,7 @@ macAppBundle {
     mainClassName = "org.oldbox.clippy.App"
     icon = "oldbox.icns"
     bundleJRE = true
+    appName = "Clippy-" + version
     //javaProperties.put("apple.laf.useScreenMenuBar", "true")
     //backgroundImage = "doc/macbackground.png"
 }
