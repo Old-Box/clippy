@@ -1,5 +1,6 @@
 package org.oldbox.clippy;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.security.InvalidParameterException;
@@ -24,7 +25,7 @@ public class ClippyRepository {
         return this.database.containsKey(name);
     }
 
-    public void addCategory(String name, String color) {
+    public void addCategory(String name, Color color) {
         if (this.categoryExists(name)) {
             throw new InvalidParameterException();
         }

@@ -5,11 +5,29 @@ import org.oldbox.clippy.ClippyContext;
 import javax.swing.*;
 import java.awt.*;
 import java.security.InvalidParameterException;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AddCategoryFrame extends JFrame {
     private JTextField categoryName;
     private JButton addButton;
     private JPanel panel;
+    private JComboBox colorPicker;
+
+    private static final Map<String, Color> colors;
+    static {
+        Map<String, Color> c = new HashMap<>();
+        c.put("red", Color.red);
+        c.put("blue", Color.blue);
+        c.put("green", Color.green);
+        c.put("white", Color.white);
+        c.put("cyan", Color.cyan);
+        c.put("magenta", Color.magenta);
+        c.put("pink", Color.pink);
+        c.put("yellow", Color.yellow);
+        colors = Collections.unmodifiableMap(c);
+    }
 
     public AddCategoryFrame() {
         super();
@@ -22,11 +40,12 @@ public class AddCategoryFrame extends JFrame {
         this.addButton.addActionListener(e -> {
 
             String categoryName = this.categoryName.getText();
+            String selectedColor = (String) this.colorPicker.getSelectedItem();
 
             ClippyContext ctx = ClippyContext.getInstance();
 
             try {
-                ctx.getRepository().addCategory(categoryName, "#000000");
+                ctx.getRepository().addCategory(categoryName, colors.get(selectedColor));
                 this.setVisible(false);
                 this.dispose();
             } catch (InvalidParameterException exception) {
