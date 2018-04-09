@@ -1,11 +1,8 @@
 package org.oldbox.clippy;
 
-<<<<<<< HEAD
 import java.awt.*;
-=======
 import org.oldbox.clippy.storage.StorageBackend;
 
->>>>>>> Moved from in-memory storage to StorageBackend
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
