@@ -7,7 +7,9 @@ import org.oldbox.clippy.tray.menuitems.CategoryItem;
 import org.oldbox.clippy.tray.menuitems.DatabaseContentItem;
 import org.oldbox.clippy.tray.menuitems.ExitItem;
 
+import javax.swing.*;
 import java.awt.*;
+import java.nio.file.FileSystemException;
 import java.util.Set;
 
 public class SystemTrayIcon extends TrayIcon {
@@ -34,13 +36,23 @@ public class SystemTrayIcon extends TrayIcon {
         menu = new PopupMenu();
 
         ClippyContext ctx = ClippyContext.getInstance();
-        Set<String> categories = ctx.getRepository().getCategories();
-        populateMenu(categories);
+        try {
+            Set<String> categories = ctx.getRepository().getCategories();
+            populateMenu(categories);
+        } catch (FileSystemException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Unable to read from save file");
+        }
 
         ctx.getRepository().addActionListener(e -> {
             if (e.getID() == ClippyRepository.DATABASE_UPDATED) {
-                Set<String> updatedCategories = ctx.getRepository().getCategories();
-                this.populateMenu(updatedCategories);
+                try {
+                    Set<String> updatedCategories = ctx.getRepository().getCategories();
+                    this.populateMenu(updatedCategories);
+                } catch (FileSystemException e1) {
+                    e1.printStackTrace();
+                    JOptionPane.showMessageDialog(null, "Unable to read from save file");
+                }
             }
         });
 

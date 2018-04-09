@@ -1,5 +1,7 @@
 package org.oldbox.clippy.frames;
 
+import com.intellij.uiDesigner.core.GridConstraints;
+import com.intellij.uiDesigner.core.GridLayoutManager;
 import org.oldbox.clippy.Category;
 import org.oldbox.clippy.ClippyContext;
 import org.oldbox.clippy.ClippyRepository;
@@ -7,6 +9,7 @@ import org.oldbox.clippy.NoteEntry;
 
 import javax.swing.*;
 import java.awt.*;
+import java.nio.file.FileSystemException;
 
 public class DragAndDropFrame extends JFrame {
     private JTextArea droppableTextArea;
@@ -44,9 +47,14 @@ public class DragAndDropFrame extends JFrame {
         String category = categoryLabel.getText();
         NoteEntry entry = new NoteEntry(content);
         ClippyRepository repository = ClippyContext.getInstance().getRepository();
-        repository.addEntryToCategory(category, entry);
-        droppableTextArea.setText(""); // If this is not desired automatically, then a check box could be added for automatic clean up.
-        showSavedMessage();
+        try {
+            repository.addEntryToCategory(category, entry);
+            droppableTextArea.setText(""); // If this is not desired automatically, then a check box could be added for automatic clean up.
+            showSavedMessage();
+        } catch (FileSystemException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Unable to write to save file");
+        }
     }
 
     private void showSavedMessage() {
@@ -82,27 +90,27 @@ public class DragAndDropFrame extends JFrame {
      */
     private void $$$setupUI$$$() {
         panel = new JPanel();
-        panel.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(4, 2, new Insets(0, 0, 0, 0), -1, -1));
+        panel.setLayout(new GridLayoutManager(4, 2, new Insets(0, 0, 0, 0), -1, -1));
         panel.setBackground(new Color(-12434878));
         panel.setEnabled(true);
         saveButton = new JButton();
         saveButton.setText("Save");
-        panel.add(saveButton, new com.intellij.uiDesigner.core.GridConstraints(3, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel.add(saveButton, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         categoryLabel = new JLabel();
         categoryLabel.setBackground(new Color(-16777216));
         categoryLabel.setEnabled(true);
         categoryLabel.setForeground(new Color(-1));
         categoryLabel.setText("CATEGORY HERE...");
-        panel.add(categoryLabel, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel.add(categoryLabel, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         messageLabel = new JLabel();
         messageLabel.setText("");
-        panel.add(messageLabel, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel.add(messageLabel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JScrollPane scrollPane1 = new JScrollPane();
-        panel.add(scrollPane1, new com.intellij.uiDesigner.core.GridConstraints(2, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        panel.add(scrollPane1, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         droppableTextArea = new JTextArea();
         scrollPane1.setViewportView(droppableTextArea);
         scrollBar1 = new JScrollBar();
-        panel.add(scrollBar1, new com.intellij.uiDesigner.core.GridConstraints(2, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_VERTICAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        panel.add(scrollBar1, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         categoryLabel.setLabelFor(droppableTextArea);
         scrollPane1.setVerticalScrollBar(scrollBar1);
     }
