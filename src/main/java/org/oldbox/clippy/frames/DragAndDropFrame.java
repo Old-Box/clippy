@@ -36,10 +36,7 @@ public class DragAndDropFrame extends JFrame {
 
     private void updateCategoryLabel(Category category) {
         this.categoryLabel.setText(category.getName());
-        if (category.getColor().equals("#FFFFFF")) {
-            this.categoryLabel.setForeground(Color.BLACK);
-        }
-        this.categoryLabel.setBackground(Color.decode(category.getColor()));
+        this.categoryLabel.setForeground(category.getColor());
     }
 
     private void saveButtonPressed() {
