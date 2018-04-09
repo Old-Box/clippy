@@ -9,8 +9,6 @@ public class AddCategoryItem extends MenuItem {
     public AddCategoryItem() {
         super("Add category");
 
-        this.addActionListener(actionEvent -> {
-           new AddCategoryFrame();
-        });
+        this.addActionListener(actionEvent -> new AddCategoryFrame());
     }
 }
