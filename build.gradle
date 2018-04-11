@@ -3,7 +3,11 @@ import static org.apache.tools.ant.taskdefs.condition.Os.*
 
 plugins {
     id 'java'
-    id "edu.sc.seis.macAppBundle" version "2.1.0"
+    id "edu.sc.seis.macAppBundle" version "2.1.0" apply false
+}
+
+if (org.gradle.internal.os.OperatingSystem.current().isMacOsX()) {
+    apply plugin: 'edu.sc.seis.macAppBundle'
 }
 
 apply plugin: 'java'
