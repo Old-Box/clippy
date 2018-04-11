@@ -1,8 +1,12 @@
 package org.oldbox.clippy.tray.menuitems;
 
+import org.oldbox.clippy.ClippyContext;
+import org.oldbox.clippy.NoteEntry;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
+import java.nio.file.FileSystemException;
 
 public class GenerateReportItem extends MenuItem {
 
@@ -14,11 +18,44 @@ public class GenerateReportItem extends MenuItem {
             JFileChooser fileChooser = getSaveFileDialog();
             int result = fileChooser.showSaveDialog(frame);
             if (result == JFileChooser.APPROVE_OPTION) {
+
+                String reportContent = getReportContent();
                 File report = fileChooser.getSelectedFile();
-                System.out.println("Save report as: " + report.getAbsolutePath());
-                writeReportContentToFile(report.getAbsolutePath(), "Test");
+                writeReportContentToFile(report.getAbsolutePath(), reportContent);
             }
         });
+    }
+
+    private String getReportContent() {
+        ClippyContext ctx = ClippyContext.getInstance();
+        StringBuilder data = new StringBuilder();
+
+        try {
+            appendContentFromAllCategories(ctx, data);
+        } catch (FileSystemException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Unable to read from save file");
+        }
+        return data.toString();
+    }
+
+    private void appendContentFromAllCategories(ClippyContext ctx, StringBuilder data) throws FileSystemException {
+        for (String categoryName : ctx.getRepository().getCategories()) {
+            data.append(categoryName)
+                    .append(System.lineSeparator())
+                    .append(System.lineSeparator());
+
+            for (NoteEntry entry : ctx.getRepository().getCategory(categoryName).getEntries()) {
+                data.append(entry.getTimestamp())
+                        .append(System.lineSeparator())
+                        .append(entry.getData())
+                        .append(System.lineSeparator())
+                        .append(System.lineSeparator());
+            }
+
+            data.append("--------------")
+                    .append(System.lineSeparator());
+        }
     }
 
     private void writeReportContentToFile(String filepath, String content) {
@@ -28,6 +65,7 @@ public class GenerateReportItem extends MenuItem {
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Unable to write report.");
         }
     }
 
