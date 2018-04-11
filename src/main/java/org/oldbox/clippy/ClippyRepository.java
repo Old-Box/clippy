@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.List;
 
 public class ClippyRepository {
 
@@ -65,6 +66,36 @@ public class ClippyRepository {
 
     public Set<String> getCategories() throws FileSystemException {
         return this.getDatabase().keySet();
+    }
+
+    public List<Category> getCategories(List<String> categoryNames) throws FileSystemException {
+        java.util.List<Category> categories = new ArrayList<>();
+        java.util.List<String> failedNames = new ArrayList<>();
+        for (String name : categoryNames) {
+            try {
+                categories.add(getCategory(name));
+            } catch (FileSystemException e) {
+                failedNames.add(name);
+            }
+        }
+
+        if(failedNames.size() > 0) {
+            StringBuilder builder = new StringBuilder();
+            builder.append("Could not find these categories: ");
+            boolean first = true;
+            for(String name : failedNames) {
+                if(!first) {
+                    builder.append(", ");
+                }
+                builder.append(name);
+                if(first)
+                    first = false;
+            }
+            builder.append(".");
+            throw new FileSystemException(builder.toString());
+        }
+
+        return categories;
     }
 
 
