@@ -2,10 +2,7 @@ package org.oldbox.clippy.tray;
 
 import org.oldbox.clippy.ClippyContext;
 import org.oldbox.clippy.ClippyRepository;
-import org.oldbox.clippy.tray.menuitems.AddCategoryItem;
-import org.oldbox.clippy.tray.menuitems.CategoryItem;
-import org.oldbox.clippy.tray.menuitems.DatabaseContentItem;
-import org.oldbox.clippy.tray.menuitems.ExitItem;
+import org.oldbox.clippy.tray.menuitems.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,6 +23,7 @@ public class SystemTrayIcon extends TrayIcon {
             menu.addSeparator();
         }
         menu.add(new AddCategoryItem());
+        menu.add(new GenerateReportItem());
         menu.add(new DatabaseContentItem());
         menu.add(new ExitItem());
     }
