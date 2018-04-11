@@ -1,3 +1,6 @@
+import static org.apache.tools.ant.taskdefs.condition.Os.*
+
+
 plugins {
     id 'java'
     id "edu.sc.seis.macAppBundle" version "2.1.0"
@@ -47,12 +50,14 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
-macAppBundle {
-    mainClassName = "org.oldbox.clippy.App"
-    icon = "oldbox.icns"
-    bundleJRE = true
-    appName = "Clippy-" + version
-    //javaProperties.put("apple.laf.useScreenMenuBar", "true")
-    //backgroundImage = "doc/macbackground.png"
+if (org.gradle.internal.os.OperatingSystem.current().isMacOsX()) {
+    macAppBundle {
+        mainClassName = "org.oldbox.clippy.App"
+        icon = "oldbox.icns"
+        bundleJRE = true
+        appName = "Clippy-" + version
+        //javaProperties.put("apple.laf.useScreenMenuBar", "true")
+        //backgroundImage = "doc/macbackground.png"
+    }
 }
 
