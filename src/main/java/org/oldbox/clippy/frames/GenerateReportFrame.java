@@ -47,8 +47,7 @@ public class GenerateReportFrame extends JFrame {
             categoryCount = categories.size();
             DefaultListModel model = new DefaultListModel();
 
-            for (String category : categories)
-                model.addElement(category);
+            categories.forEach(category -> model.addElement(category));
             categoryList = new JList(model);
             categoryList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
             categoryList.setLayoutOrientation(JList.VERTICAL);
@@ -146,9 +145,10 @@ public class GenerateReportFrame extends JFrame {
 
     private String getContentForSelectedCategories(List selectedCategoryNames) {
         List<String> names = new ArrayList<>();
-        for (Object o : selectedCategoryNames) {
-            names.add((String) o);
-        }
+        selectedCategoryNames.forEach(name -> names.add((String)name));
+        //for (Object o : selectedCategoryNames) {
+        //    names.add((String) o);
+        //}
         ClippyContext ctx = ClippyContext.getInstance();
         List<Category> categories = new ArrayList<>();
         try {
