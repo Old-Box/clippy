@@ -1,6 +1,6 @@
 package org.oldbox.clippy;
 
-import java.awt.*;
+import java.awt.Color;
 import org.oldbox.clippy.storage.StorageBackend;
 
 import java.awt.event.ActionEvent;
@@ -69,8 +69,8 @@ public class ClippyRepository {
     }
 
     public List<Category> getCategories(List<String> categoryNames) throws FileSystemException {
-        java.util.List<Category> categories = new ArrayList<>();
-        java.util.List<String> failedNames = new ArrayList<>();
+        List<Category> categories = new ArrayList<>();
+        List<String> failedNames = new ArrayList<>();
         for (String name : categoryNames) {
             try {
                 categories.add(getCategory(name));
@@ -80,22 +80,20 @@ public class ClippyRepository {
         }
 
         if(failedNames.size() > 0) {
-            StringBuilder builder = new StringBuilder();
-            builder.append("Could not find these categories: ");
-            boolean first = true;
-            for(String name : failedNames) {
-                if(!first) {
-                    builder.append(", ");
-                }
-                builder.append(name);
-                if(first)
-                    first = false;
-            }
-            builder.append(".");
+            StringBuilder builder = getFailedCategoryNamesMessage(failedNames);
             throw new FileSystemException(builder.toString());
         }
 
         return categories;
+    }
+
+    private StringBuilder getFailedCategoryNamesMessage(List<String> failedNames) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Could not find these categories: ");
+        String tmp = String.join(", ", failedNames);
+        builder.append(tmp);
+        builder.append(".");
+        return builder;
     }
 
 
