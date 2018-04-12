@@ -1,20 +1,18 @@
-import static org.apache.tools.ant.taskdefs.condition.Os.*
-
+import org.gradle.internal.os.OperatingSystem
 
 plugins {
     id 'java'
     id "edu.sc.seis.macAppBundle" version "2.1.0" apply false
 }
 
-if (org.gradle.internal.os.OperatingSystem.current().isMacOsX()) {
-    apply plugin: 'edu.sc.seis.macAppBundle'
-}
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'application'
 
+
+def mainClass = 'org.oldbox.clippy.App'
 group 'org.oldbox'
 version '0.1-ALPHA'
 sourceCompatibility = 1.8
@@ -25,7 +23,7 @@ jar {
         attributes(
                 'Implementation-Title': project.name,
                 'Implementation-Version': version,
-                'Main-Class': 'org.oldbox.clippy.App',
+                'Main-Class': mainClass,
         )
     }
     from {
@@ -35,7 +33,7 @@ jar {
 
 task customFatJar(type: Jar) {
     manifest {
-        attributes 'Main-Class': 'org.oldbox.clippy.App'
+        attributes 'Main-Class': mainClass
     }
     baseName = 'Clippy'
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it)} }
@@ -54,9 +52,10 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
-if (org.gradle.internal.os.OperatingSystem.current().isMacOsX()) {
+if (OperatingSystem.current().isMacOsX()) {
+    apply plugin: 'edu.sc.seis.macAppBundle'
     macAppBundle {
-        mainClassName = "org.oldbox.clippy.App"
+        mainClassName = mainClass
         icon = "oldbox.icns"
         bundleJRE = true
         appName = "Clippy-" + version
