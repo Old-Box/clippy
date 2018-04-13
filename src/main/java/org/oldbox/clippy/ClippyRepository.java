@@ -1,6 +1,6 @@
 package org.oldbox.clippy;
 
-import java.awt.*;
+import java.awt.Color;
 import org.oldbox.clippy.storage.StorageBackend;
 
 import java.awt.event.ActionEvent;
@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.List;
 
 public class ClippyRepository {
 
@@ -65,6 +66,33 @@ public class ClippyRepository {
 
     public Set<String> getCategories() throws FileSystemException {
         return this.getDatabase().keySet();
+    }
+
+    public List<Category> getCategories(List<String> categoryNames) throws FileSystemException {
+        List<Category> categories = new ArrayList<>();
+        List<String> failedNames = new ArrayList<>();
+        for (String name : categoryNames) {
+            try {
+                categories.add(getCategory(name));
+            } catch (FileSystemException e) {
+                failedNames.add(name);
+            }
+        }
+
+        if(failedNames.size() > 0) {
+            throw new FileSystemException(getFailedCategoryNamesMessage(failedNames));
+        }
+
+        return categories;
+    }
+
+    private static String getFailedCategoryNamesMessage(List<String> failedNames) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Could not find these categories: ");
+        String tmp = String.join(", ", failedNames);
+        builder.append(tmp);
+        builder.append(".");
+        return builder.toString();
     }
 
 
