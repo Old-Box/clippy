@@ -53,8 +53,9 @@ public class GenerateReportFrame extends JFrame {
             categoryList.setLayoutOrientation(JList.VERTICAL);
             categoryList.setVisibleRowCount(-1);
             listScrollPane.setViewportView(categoryList);
-            listScrollPane.setSize(getScrollPaneDimension(categories));
-
+            if (!categories.isEmpty()) {
+                listScrollPane.setSize(getScrollPaneDimension(categories));
+            }
 
         } catch (FileSystemException e) {
             e.printStackTrace();
@@ -70,13 +71,7 @@ public class GenerateReportFrame extends JFrame {
 
     private Dimension getScrollPaneDimension(Set<String> categories) {
         int height = categories.size() * 10;
-        int width = 0;
-        for (String category : categories) {
-            if (category.length() > width) {
-                width = category.length();
-            }
-        }
-        width *= 10;
+        int width = (categories.stream().map(String::length).max(Integer::compare).get()) * 10;
         return new Dimension(width, height);
     }
 
@@ -145,7 +140,7 @@ public class GenerateReportFrame extends JFrame {
 
     private String getContentForSelectedCategories(List selectedCategoryNames) {
         List<String> names = new ArrayList<>();
-        selectedCategoryNames.forEach(name -> names.add((String)name));
+        selectedCategoryNames.forEach(name -> names.add((String) name));
         //for (Object o : selectedCategoryNames) {
         //    names.add((String) o);
         //}
