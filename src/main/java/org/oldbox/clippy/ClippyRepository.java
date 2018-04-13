@@ -80,20 +80,19 @@ public class ClippyRepository {
         }
 
         if(failedNames.size() > 0) {
-            StringBuilder builder = getFailedCategoryNamesMessage(failedNames);
-            throw new FileSystemException(builder.toString());
+            throw new FileSystemException(getFailedCategoryNamesMessage(failedNames));
         }
 
         return categories;
     }
 
-    private StringBuilder getFailedCategoryNamesMessage(List<String> failedNames) {
+    private static String getFailedCategoryNamesMessage(List<String> failedNames) {
         StringBuilder builder = new StringBuilder();
         builder.append("Could not find these categories: ");
         String tmp = String.join(", ", failedNames);
         builder.append(tmp);
         builder.append(".");
-        return builder;
+        return builder.toString();
     }
 
 
